@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Novara UV Necklace</title>
+		<title>Novara UV Monitor</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -17,110 +17,49 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong>Novara</strong> UV Necklace</a>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-									</ul>
+									<a href="index.html" class="logo"><strong>Novara</strong> UV Monitor</a>
 								</header>
 
 							<!-- Banner -->
-								<section id="banner">
-									<div class="content">
-										<header>
-											<h1>Meet Sonavis<br />
-											The Super Smart UV Necklace</h1>
-											<p>Real-time UV monitoring for a healthier, sun-safe lifestyle</p>
-										</header>
-										<p>Novara tracks your UV exposure, alerts you when levels are harmful, and empowers you to make informed sun protection decisions — all in a sleek, solar-powered design.</p>
-										<ul class="actions">
-											<li><a href="#" class="button big">Discover More</a></li>
-										</ul>
-									</div>
-									<span class="image object">
-										<img src="images/novara.jpg" alt="Novara UV Necklace" />
-									</span>
-								</section>
-
-							<!-- Features -->
-							<section>
-								<header class="major">
-									<h2>Why Choose Novara?</h2>
-								</header>
-								<div class="features">
-									<article>
-										<span class="icon fa-sun"></span>
-										<div class="content">
-											<h3>Real-Time UV Monitoring</h3>
-											<p>Accurately measures UV exposure and sends custom alerts directly to your device.</p>
-										</div>
-									</article>
-									<article>
-										<span class="icon fa-bolt"></span>
-										<div class="content">
-											<h3>Solar-Powered</h3>
-											<p>No charging required — Novara powers itself with sunlight.</p>
-										</div>
-									</article>
-									<article>
-										<span class="icon fa-mobile-alt"></span>
-										<div class="content">
-											<h3>App Integration</h3>
-											<p>Syncs with your smartphone to track long-term UV exposure trends and provide personalized sun safety recommendations.</p>
-										</div>
-									</article>
-									<article>
-										<span class="icon fa-leaf"></span>
-										<div class="content">
-											<h3>Eco-Friendly Design</h3>
-											<p>Built with sustainable materials to protect both your skin and the planet.</p>
-										</div>
-									</article>
+							<section id="banner">
+								<div class="content">
+									<header>
+										<h1>Track Your UV Exposure<br />
+										Stay Safe in the Sun</h1>
+									</header>
+									<p>Monitor real-time UV levels from your Novara Necklace, receive alerts, and analyze your sun exposure trends for better skin health.</p>
+									<ul class="actions">
+										<li><a href="#monitor" class="button big">Check UV Levels</a></li>
+									</ul>
 								</div>
 							</section>
 
-							<!-- Get in Touch -->
-							<section>
+							<!-- UV Monitoring -->
+							<section id="monitor">
 								<header class="major">
-									<h2>Stay Connected</h2>
+									<h2>Live UV Monitoring</h2>
 								</header>
-								<p>Join our community and stay updated on product launches, sun safety tips, and special offers.</p>
-								<ul class="actions">
-									<li><a href="#" class="button">Sign Up</a></li>
-								</ul>
+								<div class="uv-display">
+									<h3>Current UV Index: <span id="uv-index">Loading...</span></h3>
+									<p>Recommended Protection: <span id="uv-protection">Calculating...</span></p>
+								</div>
+							</section>
+
+							<!-- UV History -->
+							<section id="history">
+								<header class="major">
+									<h2>UV Exposure History</h2>
+								</header>
+								<p>View your past UV exposure data and trends to make better sun protection choices.</p>
+								<div id="uv-chart"></div>
 							</section>
 
 						</div>
 					</div>
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Home</a></li>
-										<li><a href="#">Features</a></li>
-										<li><a href="#">About</a></li>
-										<li><a href="#">Contact</a></li>
-									</ul>
-								</nav>
-
-						</div>
-					</div>
-
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/uv-monitor.js"></script>
 	</body>
 </html>
