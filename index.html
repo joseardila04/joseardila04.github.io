@@ -42,6 +42,11 @@
 								<div class="uv-display">
 									<h3>Current UV Index: <span id="uv-index">Loading...</span></h3>
 									<p>Recommended Protection: <span id="uv-protection">Calculating...</span></p>
+									<p>Location: Austin, Texas</p>
+								</div>
+								<div class="alerts">
+									<h3>Personalized Alerts</h3>
+									<p id="alert-message">Checking UV exposure...</p>
 								</div>
 							</section>
 
@@ -51,7 +56,7 @@
 									<h2>UV Exposure History</h2>
 								</header>
 								<p>View your past UV exposure data and trends to make better sun protection choices.</p>
-								<div id="uv-chart"></div>
+								<canvas id="uv-chart"></canvas>
 							</section>
 
 						</div>
@@ -60,6 +65,41 @@
 
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="assets/js/uv-monitor.js"></script>
+		<script>
+			// Mock data for Austin, TX
+			const mockUVData = {
+				labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+				datasets: [{
+					label: "UV Index",
+					data: [3, 5, 6, 8, 7, 5, 4],
+					backgroundColor: "rgba(255, 165, 0, 0.5)",
+					borderColor: "rgba(255, 165, 0, 1)",
+					borderWidth: 2
+				}]
+			};
+
+			const ctx = document.getElementById("uv-chart").getContext("2d");
+			new Chart(ctx, {
+				type: "line",
+				data: mockUVData,
+				options: {
+					responsive: true,
+					scales: {
+						y: { beginAtZero: true }
+					}
+				}
+			});
+
+			// UV Alert Logic
+			const uvIndex = 6; // Example value, replace with real-time data
+			const alertMessage = document.getElementById("alert-message");
+			if (uvIndex >= 6) {
+				alertMessage.innerText = "High UV levels detected! Apply sunscreen and seek shade.";
+			} else {
+				alertMessage.innerText = "UV levels are moderate. Stay protected.";
+			}
+		</script>
 	</body>
 </html>
