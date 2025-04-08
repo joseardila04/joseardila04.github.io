@@ -3,27 +3,25 @@ import axios from 'axios';
 
 const UvMonitor = () => {
   const [uvIndex, setUvIndex] = useState(null);
-  const [skinType, setSkinType] = useState('');
   const [alertMsg, setAlertMsg] = useState('');
   const [protection, setProtection] = useState('');
+  const [skinType, setSkinType] = useState('');
 
   useEffect(() => {
-    // Fetch live UV data
-    const fetchUV = async () => {
-      const API_KEY = "YOUR_API_KEY"; // <- replace this
-      const lat = 30.2672; // Austin, TX
-      const lon = -97.7431;
+    // 🔥 This is where you put your full API URL
+    const apiURL = "https://api.openweathermap.org/data/2.5/uvi?lat=30.2672&lon=-97.7431&appid=f722d02c29f6bc6700fd55f48ab25379";
 
+    const fetchUV = async () => {
       try {
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+        const response = await axios.get(apiURL);
         setUvIndex(response.data.value);
       } catch (error) {
-        console.error("Failed to fetch UV index", error);
+        console.error("Error fetching UV index:", error);
       }
     };
 
     fetchUV();
-  }, []);
+  }, []); // Empty dependency array = runs once on page load
 
   const handleSkinChange = (e) => {
     const value = parseInt(e.target.value);
@@ -34,15 +32,16 @@ const UvMonitor = () => {
       "Minimal protection needed.",
       "Wear sunglasses, use SPF 30+ sunscreen.",
       "Use SPF 50+, seek shade.",
-      "Avoid sun, wear protective clothes.",
-      "Stay indoors, full protection required."
+      "Avoid sun exposure, wear protective clothing.",
+      "Avoid going outside, full protection required."
     ];
+
     const riskIndex = Math.min(Math.floor((uvIndex || 0) / 3), 4);
 
     if (uvIndex >= thresholds[value]) {
-      setAlertMsg(`⚠️ Alert: UV Index ${uvIndex} is high for your skin type.`);
+      setAlertMsg(`⚠️ UV Index ${uvIndex} is high for your skin type.`);
     } else {
-      setAlertMsg(`✅ UV Index is safe for short exposure.`);
+      setAlertMsg("✅ UV Index is currently safe.");
     }
 
     setProtection(guidance[riskIndex]);
@@ -51,25 +50,21 @@ const UvMonitor = () => {
   return (
     <section>
       <h2>Live UV Monitoring</h2>
-      <div className="monitor-columns">
-        <div className="left-column">
-          <h3>Current UV Index: {uvIndex !== null ? uvIndex : "Loading..."}</h3>
-          <p>Recommended Protection: {protection}</p>
-          <p>Location: Austin, Texas</p>
-        </div>
-        <div className="right-column">
-          <h3>Personalized Alerts</h3>
-          <p>{alertMsg}</p>
-          <select onChange={handleSkinChange}>
-            <option value="">-- Select Your Skin Type --</option>
-            <option value="1">Type I - Very Fair</option>
-            <option value="2">Type II - Fair</option>
-            <option value="3">Type III - Medium</option>
-            <option value="4">Type IV - Olive</option>
-            <option value="5">Type V - Brown</option>
-            <option value="6">Type VI - Dark Brown</option>
-          </select>
-        </div>
+      <h3>Current UV Index: {uvIndex !== null ? uvIndex : "Loading..."}</h3>
+      <p>Protection Recommendation: {protection}</p>
+
+      <div>
+        <h4>Select Your Skin Type</h4>
+        <select onChange={handleSkinChange}>
+          <option value="">-- Choose --</option>
+          <option value="1">Type I - Very Fair</option>
+          <option value="2">Type II - Fair</option>
+          <option value="3">Type III - Medium</option>
+          <option value="4">Type IV - Olive</option>
+          <option value="5">Type V - Brown</option>
+          <option value="6">Type VI - Dark Brown</option>
+        </select>
+        <p>{alertMsg}</p>
       </div>
     </section>
   );
