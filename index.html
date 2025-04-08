@@ -1,131 +1,65 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Novara UV Monitor</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+<!-- UV Monitoring -->
+<section id="monitor">
+	<header class="major">
+		<h2>Live UV Monitoring</h2>
+	</header>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+	<style>
+		.monitor-columns {
+			display: flex;
+			gap: 40px;
+			flex-wrap: wrap;
+		}
+		.left-column {
+			flex: 2;
+			min-width: 300px;
+		}
+		.right-column {
+			flex: 1;
+			min-width: 250px;
+			background-color: #f0f9ff;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		.right-column h3, .right-column select {
+			margin-top: 1rem;
+		}
+		@media (max-width: 768px) {
+			.monitor-columns {
+				flex-direction: column;
+			}
+		}
+	</style>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+	<div class="monitor-columns">
+		<!-- Left Column -->
+		<div class="left-column">
+			<div class="uv-display">
+				<img src="images/ApplyingSunscreen.jpg" alt="Person applying sunscreen" width="100%">
+				<h3>Current UV Index: <span id="uv-index">Loading...</span></h3>
+				<p>Recommended Protection: <span id="uv-protection">Calculating...</span></p>
+				<p>Location: Austin, Texas</p>
+			</div>
+		</div>
 
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>Novara</strong> UV Monitor</a>
-								</header>
-
-							<!-- Banner -->
-							<section id="banner">
-								<div class="content">
-									<header>
-										<h1>Track Your UV Exposure<br />
-										Stay Safe in the Sun</h1>
-										<img src="images/sunny-day.jpg" alt="Person applying sunscreen" width="500">
-									</header>
-									<p>Monitor real-time UV levels from your Novara Necklace, receive alerts, and analyze your sun exposure trends for better skin health.</p>
-									<ul class="actions">
-										<li><a href="#monitor" class="button big">Check UV Levels</a></li>
-									</ul>
-								</div>
-							</section>
-
-							<!-- UV Monitoring -->
-							<section id="monitor">
-								<header class="major">
-									<h2>Live UV Monitoring</h2>
-								</header>
-								<div class="uv-display">
-									<img src="images/ApplyingSunscreen.jpg" alt="Person applying sunscreen" width="500">
-									<h3>Current UV Index: <span id="uv-index">Loading...</span></h3>
-									<p>Recommended Protection: <span id="uv-protection">Calculating...</span></p>
-									<p>Location: Austin, Texas</p>
-								</div>
-								<div class="alerts">
-									<h3>Personalized Alerts</h3>
-									<p id="alert-message">Checking UV exposure...</p>
-								</div>
-								<!-- Skin Type Selection -->
-								<div class="skin-type">
-									<h3>Select Your Skin Type</h3>
-									<select id="skin-type">
-										<option value="1">Type I: Very Fair, Always Burns</option>
-										<option value="2">Type II: Fair, Usually Burns</option>
-										<option value="3">Type III: Medium, Sometimes Burns</option>
-										<option value="4">Type IV: Olive, Rarely Burns</option>
-										<option value="5">Type V: Brown, Very Rarely Burns</option>
-										<option value="6">Type VI: Dark Brown, Never Burns</option>
-									</select>
-								</div>
-							</section>
-
-							<!-- UV History -->
-							<section id="history">
-								<header class="major">
-									<h2>UV Exposure History</h2>
-								</header>
-								<p>View your past UV exposure data and trends to make better sun protection choices.</p>
-								<canvas id="uv-chart"></canvas>
-							</section>
-
-						</div>
-					</div>
-				</div>
-
-		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<script src="assets/js/uv-monitor.js"></script>
-		<script>
-			// Mock data for Austin, TX
-			const mockUVData = {
-				labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-				datasets: [{
-					label: "UV Index",
-					data: [3, 5, 6, 8, 7, 5, 4],
-					backgroundColor: "rgba(255, 165, 0, 0.5)",
-					borderColor: "rgba(255, 165, 0, 1)",
-					borderWidth: 2
-				}]
-			};
-
-			const ctx = document.getElementById("uv-chart").getContext("2d");
-			new Chart(ctx, {
-				type: "line",
-				data: mockUVData,
-				options: {
-					responsive: true,
-					scales: {
-						y: { beginAtZero: true }
-					}
-				}
-			});
-
-			// UV Alert Logic
-			document.getElementById("skin-type").addEventListener("change", function() {
-				const skinType = parseInt(this.value);
-				const uvIndex = 6; // Example value, replace with real-time data
-				const alertMessage = document.getElementById("alert-message");
-				const protectionMessage = document.getElementById("uv-protection");
-
-				const riskLevels = ["Extreme", "Very High", "High", "Moderate", "Low"];
-				const recommendedProtection = [
-					"Avoid sun, wear SPF 50+",
-					"Seek shade, wear SPF 30+",
-					"Wear a hat, sunglasses, SPF 15+",
-					"Use sunscreen, avoid midday sun",
-					"Minimal protection needed"
-				];
-
-				const riskIndex = Math.max(0, Math.min(4, 5 - Math.ceil(uvIndex / 3)));
-				alertMessage.innerText = `UV Level: ${riskLevels[riskIndex]}`;
-				protectionMessage.innerText = recommendedProtection[riskIndex];
-			});
-		</script>
-	</body>
-</html>
+		<!-- Right Column -->
+		<div class="right-column">
+			<div class="alerts">
+				<h3>Personalized Alerts</h3>
+				<p id="alert-message">Checking UV exposure...</p>
+			</div>
+			<!-- Skin Type Selection -->
+			<div class="skin-type">
+				<h3>Select Your Skin Type</h3>
+				<select id="skin-type">
+					<option value="1">Type I: Very Fair, Always Burns</option>
+					<option value="2">Type II: Fair, Usually Burns</option>
+					<option value="3">Type III: Medium, Sometimes Burns</option>
+					<option value="4">Type IV: Olive, Rarely Burns</option>
+					<option value="5">Type V: Brown, Very Rarely Burns</option>
+					<option value="6">Type VI: Dark Brown, Never Burns</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</section>
