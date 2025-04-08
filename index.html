@@ -1,10 +1,17 @@
-<!-- UV Monitoring -->
-<section id="monitor">
-	<header class="major">
-		<h2>Live UV Monitoring</h2>
-	</header>
-
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Novara UV Monitor</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
 	<style>
+		body {
+			font-family: sans-serif;
+			background: linear-gradient(to bottom, #a0c8ff, #e0f7ff);
+			margin: 0;
+			padding: 0;
+		}
 		.monitor-columns {
 			display: flex;
 			gap: 40px;
@@ -30,36 +37,172 @@
 			}
 		}
 	</style>
+</head>
+<body class="is-preload">
 
-	<div class="monitor-columns">
-		<!-- Left Column -->
-		<div class="left-column">
-			<div class="uv-display">
-				<img src="images/ApplyingSunscreen.jpg" alt="Person applying sunscreen" width="100%">
-				<h3>Current UV Index: <span id="uv-index">Loading...</span></h3>
-				<p>Recommended Protection: <span id="uv-protection">Calculating...</span></p>
-				<p>Location: Austin, Texas</p>
-			</div>
-		</div>
+<!-- Wrapper -->
+<div id="wrapper">
 
-		<!-- Right Column -->
-		<div class="right-column">
-			<div class="alerts">
-				<h3>Personalized Alerts</h3>
-				<p id="alert-message">Checking UV exposure...</p>
-			</div>
-			<!-- Skin Type Selection -->
-			<div class="skin-type">
-				<h3>Select Your Skin Type</h3>
-				<select id="skin-type">
-					<option value="1">Type I: Very Fair, Always Burns</option>
-					<option value="2">Type II: Fair, Usually Burns</option>
-					<option value="3">Type III: Medium, Sometimes Burns</option>
-					<option value="4">Type IV: Olive, Rarely Burns</option>
-					<option value="5">Type V: Brown, Very Rarely Burns</option>
-					<option value="6">Type VI: Dark Brown, Never Burns</option>
-				</select>
-			</div>
+	<!-- Main -->
+	<div id="main">
+		<div class="inner">
+
+			<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo"><strong>Novara</strong> UV Monitor</a>
+			</header>
+
+			<!-- Banner -->
+			<section id="banner">
+				<div class="content">
+					<header>
+						<h1>Track Your UV Exposure<br />Stay Safe in the Sun</h1>
+						<img src="images/sunny-day.jpg" alt="Sunny Day" width="500">
+					</header>
+					<p>Monitor real-time UV levels from your Novara Necklace, receive alerts, and analyze your sun exposure trends for better skin health.</p>
+					<ul class="actions">
+						<li><a href="#monitor" class="button big">Check UV Levels</a></li>
+					</ul>
+				</div>
+			</section>
+
+			<!-- UV Monitoring -->
+			<section id="monitor">
+				<header class="major">
+					<h2>Live UV Monitoring</h2>
+				</header>
+
+				<div class="monitor-columns">
+					<!-- Left Column -->
+					<div class="left-column">
+						<div class="uv-display">
+							<img src="images/ApplyingSunscreen.jpg" alt="Person applying sunscreen" width="100%">
+							<h3>Current UV Index: <span id="uv-index">Loading...</span></h3>
+							<p>Recommended Protection: <span id="uv-protection">Calculating...</span></p>
+							<p>Location: Austin, Texas</p>
+						</div>
+					</div>
+
+					<!-- Right Column -->
+					<div class="right-column">
+						<div class="alerts">
+							<h3>Personalized Alerts</h3>
+							<p id="alert-message">Checking UV exposure...</p>
+						</div>
+
+						<!-- Skin Type Selection -->
+						<div class="skin-type">
+							<h3>Select Your Skin Type</h3>
+							<select id="skin-type">
+								<option value="">-- Choose --</option>
+								<option value="1">Type I: Very Fair, Always Burns</option>
+								<option value="2">Type II: Fair, Usually Burns</option>
+								<option value="3">Type III: Medium, Sometimes Burns</option>
+								<option value="4">Type IV: Olive, Rarely Burns</option>
+								<option value="5">Type V: Brown, Very Rarely Burns</option>
+								<option value="6">Type VI: Dark Brown, Never Burns</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- UV History -->
+			<section id="history">
+				<header class="major">
+					<h2>UV Exposure History</h2>
+				</header>
+				<p>View your past UV exposure data and trends to make better sun protection choices.</p>
+				<canvas id="uv-chart"></canvas>
+			</section>
+
 		</div>
 	</div>
-</section>
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+	// Chart.js mock UV data
+	const mockUVData = {
+		labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+		datasets: [{
+			label: "UV Index",
+			data: [3, 5, 6, 8, 7, 5, 4],
+			backgroundColor: "rgba(255, 165, 0, 0.5)",
+			borderColor: "rgba(255, 165, 0, 1)",
+			borderWidth: 2
+		}]
+	};
+
+	const ctx = document.getElementById("uv-chart").getContext("2d");
+	new Chart(ctx, {
+		type: "line",
+		data: mockUVData,
+		options: {
+			responsive: true,
+			scales: {
+				y: { beginAtZero: true }
+			}
+		}
+	});
+
+	// UV Alert Logic
+	document.getElementById("skin-type").addEventListener("change", function() {
+		const skinType = parseInt(this.value);
+		const uvIndex = 6; // Mock value; replace with real-time value
+		const alertMessage = document.getElementById("alert-message");
+		const protectionMessage = document.getElementById("uv-protection");
+		const uvIndexSpan = document.getElementById("uv-index");
+
+		const thresholds = {
+			1: 3,  // Type I - Extremely High Sensitivity
+			2: 4,
+			3: 5,
+			4: 6,
+			5: 7,
+			6: 8   // Type VI - Very Low Sensitivity
+		};
+
+		const riskLevels = [
+			"Low",
+			"Moderate",
+			"High",
+			"Very High",
+			"Extreme"
+		];
+
+		const protectionGuidance = [
+			"Minimal protection needed.",
+			"Wear sunglasses, use SPF 30+ sunscreen.",
+			"Use SPF 50+ sunscreen, seek shade during midday.",
+			"Avoid sun exposure, use protective clothing.",
+			"Full protection required. Avoid going outside."
+		];
+
+		uvIndexSpan.innerText = uvIndex;
+
+		if (isNaN(skinType)) {
+			alertMessage.innerText = "Please select your skin type.";
+			protectionMessage.innerText = "N/A";
+			return;
+		}
+
+		const threshold = thresholds[skinType];
+		let riskIndex = Math.floor(uvIndex / 3); // WHO scaling
+
+		if (uvIndex >= threshold) {
+			alertMessage.innerText = `⚠️ Alert: UV Index ${uvIndex} is high for your skin type.`;
+		} else {
+			alertMessage.innerText = `✅ UV Index is safe for short exposure.`;
+		}
+
+		riskIndex = Math.min(riskIndex, 4);
+		protectionMessage.innerText = protectionGuidance[riskIndex];
+	});
+</script>
+
+</body>
+</html>
